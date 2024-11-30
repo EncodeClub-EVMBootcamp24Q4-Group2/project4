@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Query} from '@nestjs/common';
 import { AppService } from './app.service';
 import { Address } from 'viem';
 import { MintTokenDto } from './dtos/MintToken.dto';
+import { VoteDto } from './dtos/Vote.dto';
 
 @Controller()
 export class AppController {
@@ -10,6 +11,7 @@ export class AppController {
   
   constructor(private readonly appService: AppService) {}
 
+  // MyToken endpoints
   @Get()
   getHello(): string {
     return this.appService.getHello();
@@ -54,5 +56,24 @@ export class AppController {
   async mintTokens(@Body() body: MintTokenDto) {
       const result = await this.appService.mintTokens(body.address as Address, body.amount);
       return { result };
+  }
+
+  // Voting endpoints
+  @Post('vote')
+  async vote(@Body() body: VoteDto) {
+      const txHash = await this.appService.vote(body.proposal, body.amount);
+      return { txHash };
+  }
+
+  @Get('winning-proposal')
+  async getWinningProposal() {
+      const result = await this.appService.getWinningProposal();
+      return { result };
+  }
+
+  @Get('voting-results')
+  async getVotingResults() {
+      const results = await this.appService.getVotingResults();
+      return { results };
   }
 }

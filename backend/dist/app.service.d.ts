@@ -4,6 +4,8 @@ export declare class AppService {
     private configService;
     publicClient: any;
     walletClient: any;
+    private readonly proposalCount;
+    private readonly logger;
     constructor(configService: ConfigService);
     getHello(): string;
     getContractAddress(): Address;
@@ -14,4 +16,10 @@ export declare class AppService {
     getServerWalletAddress(): any;
     checkMinterRole(address: string): Promise<string>;
     mintTokens(address: Address, amount: string): Promise<any>;
+    vote(proposal: number, amount: string): Promise<any>;
+    getWinningProposal(): Promise<{
+        winningProposal: number;
+        winnerName: string;
+    }>;
+    getVotingResults(): Promise<any[]>;
 }

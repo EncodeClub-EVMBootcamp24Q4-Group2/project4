@@ -16,6 +16,7 @@ exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 const MintToken_dto_1 = require("./dtos/MintToken.dto");
+const Vote_dto_1 = require("./dtos/Vote.dto");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
@@ -47,6 +48,18 @@ let AppController = class AppController {
     async mintTokens(body) {
         const result = await this.appService.mintTokens(body.address, body.amount);
         return { result };
+    }
+    async vote(body) {
+        const txHash = await this.appService.vote(body.proposal, body.amount);
+        return { txHash };
+    }
+    async getWinningProposal() {
+        const result = await this.appService.getWinningProposal();
+        return { result };
+    }
+    async getVotingResults() {
+        const results = await this.appService.getVotingResults();
+        return { results };
     }
 };
 exports.AppController = AppController;
@@ -108,6 +121,25 @@ __decorate([
     __metadata("design:paramtypes", [MintToken_dto_1.MintTokenDto]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "mintTokens", null);
+__decorate([
+    (0, common_1.Post)('vote'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Vote_dto_1.VoteDto]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "vote", null);
+__decorate([
+    (0, common_1.Get)('winning-proposal'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getWinningProposal", null);
+__decorate([
+    (0, common_1.Get)('voting-results'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getVotingResults", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])

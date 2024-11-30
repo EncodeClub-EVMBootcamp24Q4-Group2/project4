@@ -1,6 +1,7 @@
 import { AppService } from './app.service';
 import { Address } from 'viem';
 import { MintTokenDto } from './dtos/MintToken.dto';
+import { VoteDto } from './dtos/Vote.dto';
 export declare class AppController {
     private readonly appService;
     constructor(appService: AppService);
@@ -28,5 +29,17 @@ export declare class AppController {
     }>;
     mintTokens(body: MintTokenDto): Promise<{
         result: any;
+    }>;
+    vote(body: VoteDto): Promise<{
+        txHash: any;
+    }>;
+    getWinningProposal(): Promise<{
+        result: {
+            winningProposal: number;
+            winnerName: string;
+        };
+    }>;
+    getVotingResults(): Promise<{
+        results: any[];
     }>;
 }
