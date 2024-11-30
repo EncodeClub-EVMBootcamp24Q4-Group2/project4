@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@nestjs/common": "^10.4.12",
+    "@nestjs/config": "^3.3.0",
+    "@nestjs/swagger": "^8.0.7",
+    "dotenv": "^16.4.5"
+  }
+}
