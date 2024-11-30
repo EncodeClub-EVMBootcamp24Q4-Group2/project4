@@ -3,7 +3,6 @@ import { Address } from 'viem';
 import { MintTokenDto } from './dtos/MintToken.dto';
 export declare class AppController {
     private readonly appService;
-    logger: any;
     constructor(appService: AppService);
     getHello(): string;
     getContractAddress(): {

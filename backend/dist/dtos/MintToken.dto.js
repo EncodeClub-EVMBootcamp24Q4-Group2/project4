@@ -10,12 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MintTokenDto = void 0;
-const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
 class MintTokenDto {
 }
 exports.MintTokenDto = MintTokenDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ type: String, required: true, default: 'My Address' }),
+    (0, class_validator_1.IsEthereumAddress)(),
     __metadata("design:type", String)
 ], MintTokenDto.prototype, "address", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], MintTokenDto.prototype, "amount", void 0);
 //# sourceMappingURL=MintToken.dto.js.map

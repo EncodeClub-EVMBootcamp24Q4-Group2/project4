@@ -13,5 +13,5 @@ export declare class AppService {
     getTransactionReceipt(hash: string): Promise<string>;
     getServerWalletAddress(): any;
     checkMinterRole(address: string): Promise<string>;
-    mintTokens(address: Address): Promise<any>;
+    mintTokens(address: Address, amount: string): Promise<any>;
 }

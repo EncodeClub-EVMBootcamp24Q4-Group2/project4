@@ -94,14 +94,19 @@ let AppService = class AppService {
         });
         return `The address ${address} ${hasRole ? 'has' : 'does not have'} the role ${MINTER_ROLE}`;
     }
-    async mintTokens(address) {
-        const txHash = await this.walletClient.writeContract({
-            address: this.getContractAddress(),
-            abi: tokenJson.abi,
-            functionName: 'mint',
-            args: [address, (0, viem_1.parseEther)('0.07')],
-        });
-        return txHash;
+    async mintTokens(address, amount) {
+        try {
+            const txHash = await this.walletClient.writeContract({
+                address: this.getContractAddress(),
+                abi: tokenJson.abi,
+                functionName: 'mint',
+                args: [address, (0, viem_1.parseEther)(amount)],
+            });
+            return txHash;
+        }
+        catch (error) {
+            throw error;
+        }
     }
 };
 exports.AppService = AppService;

@@ -1,11 +1,13 @@
-import { Body, Controller, Get, Param, Post, Query, Logger } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query} from '@nestjs/common';
 import { AppService } from './app.service';
 import { Address } from 'viem';
 import { MintTokenDto } from './dtos/MintToken.dto';
 
 @Controller()
 export class AppController {
-  logger: any;
+  
+  // private readonly logger = new Logger(AppController.name);
+  
   constructor(private readonly appService: AppService) {}
 
   @Get()
@@ -20,12 +22,7 @@ export class AppController {
 
   @Get('token-name')
   async getTokenName() {
-    try {
       return { result: await this.appService.getTokenName() };
-    } catch (error) {
-      this.logger.error('Error in getTokenName', error);
-      throw error;
-    }
   }
 
   @Get('total-supply')
@@ -55,6 +52,7 @@ export class AppController {
 
   @Post('mint-tokens')
   async mintTokens(@Body() body: MintTokenDto) {
-    return { result: await this.appService.mintTokens(body.address) };
+      const result = await this.appService.mintTokens(body.address as Address, body.amount);
+      return { result };
   }
 }

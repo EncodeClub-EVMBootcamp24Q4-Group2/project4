@@ -1,7 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {Address} from "viem";
+import { IsEthereumAddress, IsString } from 'class-validator';
 
 export class MintTokenDto {
-  @ApiProperty({ type: String, required: true, default: 'My Address' })
-  address: Address;
+  @IsEthereumAddress()
+  address: string;
+
+  @IsString()
+  amount: string;
 }

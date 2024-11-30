@@ -27,13 +27,7 @@ let AppController = class AppController {
         return { result: this.appService.getContractAddress() };
     }
     async getTokenName() {
-        try {
-            return { result: await this.appService.getTokenName() };
-        }
-        catch (error) {
-            this.logger.error('Error in getTokenName', error);
-            throw error;
-        }
+        return { result: await this.appService.getTokenName() };
     }
     async getTotalSupply() {
         return { result: await this.appService.getTotalSupply() };
@@ -51,7 +45,8 @@ let AppController = class AppController {
         return { result: await this.appService.checkMinterRole(address) };
     }
     async mintTokens(body) {
-        return { result: await this.appService.mintTokens(body.address) };
+        const result = await this.appService.mintTokens(body.address, body.amount);
+        return { result };
     }
 };
 exports.AppController = AppController;

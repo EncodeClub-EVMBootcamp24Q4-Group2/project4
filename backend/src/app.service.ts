@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable} from '@nestjs/common';
 import * as tokenJson from './assets/MyToken.json';
 import {
     Address,
@@ -107,13 +107,17 @@ export class AppService {
         return `The address ${address} ${hasRole ? 'has' : 'does not have'} the role ${MINTER_ROLE}`;
     }
 
-    async mintTokens(address: Address) {
-        const txHash = await this.walletClient.writeContract({
-            address: this.getContractAddress(),
-            abi: tokenJson.abi,
-            functionName: 'mint',
-            args: [address, parseEther('0.07')],
-        });
-        return txHash;
+    async mintTokens(address: Address, amount: string) {
+        try {
+            const txHash = await this.walletClient.writeContract({
+                address: this.getContractAddress(),
+                abi: tokenJson.abi,
+                functionName: 'mint',
+                args: [address, parseEther(amount)],
+            });
+            return txHash;
+        } catch (error) {
+            throw error;
+        }
     }
 }

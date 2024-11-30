@@ -1,4 +1,4 @@
-import { Address } from "viem";
 export declare class MintTokenDto {
-    address: Address;
+    address: string;
+    amount: string;
 }
