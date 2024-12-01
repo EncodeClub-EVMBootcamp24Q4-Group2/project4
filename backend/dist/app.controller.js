@@ -45,9 +45,15 @@ let AppController = class AppController {
     async checkMinterRole(address) {
         return { result: await this.appService.checkMinterRole(address) };
     }
-    async mintTokens(body) {
-        const result = await this.appService.mintTokens(body.address, body.amount);
-        return { result };
+    async mintTokens(mintTokenDto) {
+        try {
+            const txHash = await this.appService.mintTokens(mintTokenDto.address, mintTokenDto.amount);
+            return { txHash };
+        }
+        catch (error) {
+            console.error('Minting Error:', error);
+            throw new common_1.HttpException({ error: error.message || 'Minting failed' }, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     async vote(body) {
         const txHash = await this.appService.vote(body.proposal, body.amount);

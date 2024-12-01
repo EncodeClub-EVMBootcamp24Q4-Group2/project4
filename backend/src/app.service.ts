@@ -23,7 +23,6 @@ export class AppService {
     // Number of prposals in the ballot 
     private readonly proposalCount: number = 3;
     private readonly logger = new Logger(AppService.name);
-    // logger: any;
 
     constructor(private configService: ConfigService) {
         const rpcEndpoint = this.configService.get<string>('RPC_ENDPOINT_URL');
@@ -124,8 +123,10 @@ export class AppService {
                 functionName: 'mint',
                 args: [address, parseEther(amount)],
             });
+            this.logger.log(`Minted ${amount} tokens to ${address}. Transaction hash: ${txHash}`);
             return txHash;
         } catch (error) {
+            this.logger.error('Minting Error:', error);
             throw error;
         }
     }

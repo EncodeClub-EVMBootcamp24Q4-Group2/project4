@@ -27,8 +27,8 @@ export declare class AppController {
     checkMinterRole(address: Address): Promise<{
         result: string;
     }>;
-    mintTokens(body: MintTokenDto): Promise<{
-        result: any;
+    mintTokens(mintTokenDto: MintTokenDto): Promise<{
+        txHash: any;
     }>;
     vote(body: VoteDto): Promise<{
         txHash: any;

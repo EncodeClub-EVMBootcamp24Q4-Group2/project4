@@ -107,9 +107,11 @@ let AppService = AppService_1 = class AppService {
                 functionName: 'mint',
                 args: [address, (0, viem_1.parseEther)(amount)],
             });
+            this.logger.log(`Minted ${amount} tokens to ${address}. Transaction hash: ${txHash}`);
             return txHash;
         }
         catch (error) {
+            this.logger.error('Minting Error:', error);
             throw error;
         }
     }

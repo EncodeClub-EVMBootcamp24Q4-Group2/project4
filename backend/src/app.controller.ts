@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, HttpException, HttpStatus} from '@nestjs/common';
 import { AppService } from './app.service';
 import { Address } from 'viem';
 import { MintTokenDto } from './dtos/MintToken.dto';
@@ -6,8 +6,6 @@ import { VoteDto } from './dtos/Vote.dto';
 
 @Controller()
 export class AppController {
-  
-  // private readonly logger = new Logger(AppController.name);
   
   constructor(private readonly appService: AppService) {}
 
@@ -53,9 +51,18 @@ export class AppController {
   }
 
   @Post('mint-tokens')
-  async mintTokens(@Body() body: MintTokenDto) {
-      const result = await this.appService.mintTokens(body.address as Address, body.amount);
-      return { result };
+  async mintTokens(@Body() mintTokenDto: MintTokenDto) {
+    try {
+      const txHash = await this.appService.mintTokens(mintTokenDto.address as Address, mintTokenDto.amount);
+      return { txHash }; // Return txHash within an object
+    } catch (error) {
+      // Log the error for debugging
+      console.error('Minting Error:', error);
+      throw new HttpException(
+        { error: error.message || 'Minting failed' },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   // Voting endpoints
